@@ -74,15 +74,14 @@ Copyright (c) 2026 Drexel University
 //   rd_en        Per-window read enable [FANOUT-1:0] (from syn_access_cnn)
 //   rd_addr      Kernel read address [ADDR_WIDTH-1:0] (from syn_access_cnn)
 //   rst_acc      Per-window accumulator reset [FANOUT-1:0]
-//   activation   Output [FANOUT][PRECISION] — accumulated psum,
-//                CDC-crossed to spkclk domain via synchronizer2
+//   activation   Output [FANOUT][PRECISION] — accumulated psum
 //
 // ─── Timing ─────────────────────────────────────────────────────
 //
 //   Cycle N:   rd_addr selects kernel position k, rd_en[i] active per window
 //   Cycle N+1: rd_data available, rd_en_q[i] aligns, psum[i] accumulates
 //   After MEM_SIZE cycles: psum[i] holds the convolution result for window i
-//   synchronizer2 crosses all FANOUT results to spkclk
+//   multibit_sampler captures the result onto spkclk for the LIF neuron.
 //
 // -----------------------------------------------------------------------------*/
 
@@ -118,12 +117,12 @@ module bmem_cnn #(
 	input [WT_PRECISION-1:0] wr_data,	
 	input [FANOUT-1:0]rd_en,				
 	input [ADDR_WIDTH-1:0] rd_addr,		
-	input [FANOUT-1:0]rst_acc,					
+	input [FANOUT-1:0]rst_acc,
+
 	output [PRECISION-1:0] activation [FANOUT-1:0]
 );
 
 	reg [WT_PRECISION-1:0] rd_data;
-	// reg [FANOUT-1:0]inspk_q; 
 	reg [FANOUT-1:0]rd_en_q;
 
 	//instantiate the memory
@@ -163,7 +162,6 @@ module bmem_cnn #(
 			end
 			else begin
 				if (rst_acc[i]) begin
-//                if (rst_neuron || rst_acc[i]) begin
 					psum[i] <= 0;
 				end
 				else begin
