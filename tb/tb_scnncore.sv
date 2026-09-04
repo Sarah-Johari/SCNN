@@ -85,14 +85,14 @@ module tb_scnncore #(
 
     wire [FANOUT-1:0]outspk;
 	// File paths
-	string wtFname       = {INSTALL_DIR, "/hw_q3_4/fold1/weight/snncore.synaptic_weight.txt"};
-	string addrFname     = {INSTALL_DIR, "/hw_q3_4/fold1/weight/snncore.synaptic_address.txt"};
-	string biasFname     = {INSTALL_DIR, "/hw_q3_4/fold1/weight/snncore.bias_values.txt"};
-	string biasAddrFname = {INSTALL_DIR, "/hw_q3_4/fold1/weight/snncore.bias_addresses.txt"};
+	string wtFname       = {INSTALL_DIR, "/hw_q3_4/fold2/weight/snncore.synaptic_weight.txt"};
+	string addrFname     = {INSTALL_DIR, "/hw_q3_4/fold2/weight/snncore.synaptic_address.txt"};
+	string biasFname     = {INSTALL_DIR, "/hw_q3_4/fold2/weight/snncore.bias_values.txt"};
+	string biasAddrFname = {INSTALL_DIR, "/hw_q3_4/fold2/weight/snncore.bias_addresses.txt"};
 
 
-    string ispkFname     = {INSTALL_DIR, "/hw_q3_4/fold1/input/snncore.spikes_input_moderate_0_124.txt"};
-	string ospkFname     = {INSTALL_DIR, "/hw_q3_4/fold1/output/snncore.spikes_output_moderate_0_124.txt"};
+    string ispkFname     = {INSTALL_DIR, "/hw_q3_4/fold2/input/snncore.spikes_input_moderate_0_124.txt"};
+	string ospkFname     = {INSTALL_DIR, "/hw_q3_4/fold2/output/snncore.spikes_output_moderate_0_124.txt"};
 
 	// ─────────────────────────────────────────────────────────────
 

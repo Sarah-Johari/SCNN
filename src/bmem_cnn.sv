@@ -41,8 +41,8 @@ Copyright (c) 2026 Drexel University
 //      Sign-extends rd_data from WT_PRECISION to PRECISION,
 //      then adds to psum. Shared weight, parallel accumulation.
 //
-//   5. CDC: synchronizer2
-//      Crosses psum[FANOUT] from memclk to spkclk domain,
+//   5. Sampling register (multibit_sampler):
+//      Samples psum[FANOUT] from memclk onto spkclk domain,
 //      producing activation[FANOUT] for the LIF neurons.
 //
 // ─── Parameters ─────────────────────────────────────────────────

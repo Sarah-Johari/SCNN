@@ -27,13 +27,14 @@ src/           RTL source files (SystemVerilog/Verilog)
   ├── cuba_lif.sv               FC neuron (bmem + LIF wrapper)
   ├── bias_store_gated.sv       Bias storage + spike gating
   ├── xchan_bias_acc.sv         Cross-channel accumulator + bias adder
+  ├── pooling.sv                Activation pooling (MAX/MIN/none)
   ├── lif.v                     Leaky integrate-and-fire neuron
   ├── qadd.v                    Quantized saturating adder
-  ├── qmul.v                   Quantized multiplier (bug-fixed)
+  ├── qmul.v                    Quantized multiplier (bug-fixed)
   ├── qalu.v                    Quantized ALU
   ├── twos_complement.v         Two's complement converter
-  ├── synchronizer.sv           1-bit CDC synchronizer
-  ├── synchronizer2.sv          Multi-bit CDC synchronizer
+  ├── vector_sampler.sv         Single-vector sampling register
+  ├── multibit_sampler.sv       Multi-element array sampling register
   ├── bram_decoder.sv           BRAM write address decoder
   ├── parameterized_decoder.sv  Parameterized N-to-M decoder
   ├── decoder_neuron_config.sv  Neuron config register decoder
