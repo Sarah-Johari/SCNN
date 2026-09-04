@@ -27,7 +27,6 @@ src/           RTL source files (SystemVerilog/Verilog)
   ├── cuba_lif.sv               FC neuron (bmem + LIF wrapper)
   ├── bias_store_gated.sv       Bias storage + spike gating
   ├── xchan_bias_acc.sv         Cross-channel accumulator + bias adder
-  ├── pooling.sv                Activation pooling (MAX/MIN/none)
   ├── lif.v                     Leaky integrate-and-fire neuron
   ├── qadd.v                    Quantized saturating adder
   ├── qmul.v                    Quantized multiplier (bug-fixed)
