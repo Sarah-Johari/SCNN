@@ -1,0 +1,12 @@
+// SpO2 v14g — Q5.6 state / Q1.6 weight
+INTEGER_PRECISION = 5
+DECIMAL_PRECISION = 6
+WT_INTEGER_PRECISION = 1
+PRECISION = 12
+WT_PRECISION = 8
+vth = 000001000000 // 1
+decay_rate = 000000001101 // 0.2
+grow_rate = 000001000000 // 1.0
+vrest = 000000000000 // 0
+reset_mechanism = 000001000000 // 1
+refractory_period = 000000000000 // 0
