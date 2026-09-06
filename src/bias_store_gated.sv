@@ -42,8 +42,8 @@ Copyright (c) 2026 Drexel University
 //
 //   rst            Global reset (clears bias_reg and any_input latch)
 //   rst_neuron     Neuron reset (clears any_input latch only, biases kept)
-//   memclk         Memory clock (bias register writes)
-//   spkclk         Spike clock (gating latch)
+//   memclk         Memory clock 
+//   spkclk         Spike clock 
 //   bias_wr_en     Write enable for bias register file
 //   bias_wr_addr   Output channel index to write [OUT_CH_WIDTH-1:0]
 //   bias_wr_data   Bias value to write [PRECISION-1:0]

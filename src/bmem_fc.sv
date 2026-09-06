@@ -59,38 +59,35 @@ Modifications Copyright (c) 2026 Drexel University
 //
 //   3. Removed outspk port and its CDC synchronizer.
 //      Original: outspk = CDC-crossed inspk_q (spike presence in spkclk).
-//      Modified: not used downstream (LIF.inspk tied to 0).
+//      Modified: not used downstream.
 //
 // -----------------------------------------------------------------------------*/
 
 `timescale 1ns / 1ps
 
 module bmem_fc #(
-	//configurable parameters
-	parameter FANIN 		= 256,	//FANIN of the neuron
-	parameter INTEGER_PRECISION 	= 3,	//integer precision
-	parameter WT_INTEGER_PRECISION =2,
-	parameter DECIMAL_PRECISION	= 4,	//decimal precision
-
-	//local parameters
-	localparam WT_PRECISION = (1+WT_INTEGER_PRECISION+DECIMAL_PRECISION),			//precision of synaptic weights
-	localparam PRECISION 	= (1+INTEGER_PRECISION+DECIMAL_PRECISION),	//precision of state variables (= 1 + integer_precision + decimal_precision)
-	localparam ADDR_WIDTH 	= $clog2(FANIN)	//address width for the memory addresses of fanin of each neuron. 
+	parameter FANIN 		       = 5,
+	parameter INTEGER_PRECISION    = 3,
+	parameter WT_INTEGER_PRECISION = 2,
+	parameter DECIMAL_PRECISION    = 4,
+ 
+	localparam WT_PRECISION = (1 + WT_INTEGER_PRECISION + DECIMAL_PRECISION),
+	localparam PRECISION    = (1 + INTEGER_PRECISION + DECIMAL_PRECISION),
+	localparam ADDR_WIDTH   = $clog2(FANIN)
 )(
-	input rst,				//reset
-	input memclk,				//memory access & mac clock
-	input spkclk,				//spike clock
-	input wr_en,				//write enable for writing to the synaptic weight memory
-	input [ADDR_WIDTH-1:0] wr_addr,		//synaptic memory address for write
-	input [WT_PRECISION-1:0] wr_data,	//synaptic weight
-	input rd_en,				//read enable for reading from synaptic weight memory
-	input [ADDR_WIDTH-1:0] rd_addr,		//synaptic memory address for read
-	input rst_acc,				//reset for the accumulator
-	output [PRECISION-1:0] activation	//output activation to the LIF module
+	input                    rst,			 //reset
+	input                    memclk,		 //memory access & mac clock
+	input                    spkclk,		 //spike clock
+	input                    wr_en,			 //write enable for writing to the synaptic weight memory
+	input [ADDR_WIDTH-1:0]   wr_addr,		 //synaptic memory address for write
+	input [WT_PRECISION-1:0] wr_data,	     //synaptic weight
+	input                    rd_en,			 //read enable for reading from synaptic weight memory
+	input [ADDR_WIDTH-1:0]   rd_addr,		 //synaptic memory address for read
+	input                    rst_acc,		 //reset for the accumulator
+	output [PRECISION-1:0]  activation	     //output activation to the LIF module
 );
 
 	reg [WT_PRECISION-1:0] rd_data;
-	// reg inspk_q; 
 	reg rd_en_q;
 
 	//instantiate the memory
@@ -147,7 +144,6 @@ module bmem_fc #(
 	);
 
 	//output assignment
-	// localparam PRECISION_PLUS_ONE = (PRECISION + 1);
 	vector_sampler #(
 		.N(PRECISION)
 	) ff_samp(

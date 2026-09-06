@@ -4,7 +4,7 @@ Copyright (c) 2026 Drexel University
 
 // Author       : Sarah Johari
 // Email        : sj984@drexel.edu
-// Date         : Aug 27, 2025
+// Date         : Aug, 2025
 // File         : bram_decoder.sv
 //
 // ─── Description ────────────────────────────────────────────────

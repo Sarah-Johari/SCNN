@@ -67,7 +67,7 @@ Copyright (c) 2026 Drexel University
 //
 //   rst          Async reset (clears psum, rd_en_q)
 //   memclk       Memory clock (BRAM access, MAC accumulation)
-//   spkclk       Spike clock (CDC target for activation output)
+//   spkclk       Spike clock 
 //   wr_en        Weight write enable
 //   wr_addr      Weight write address [ADDR_WIDTH-1:0]
 //   wr_data      Weight data [WT_PRECISION-1:0]
