@@ -4,20 +4,18 @@ Copyright (c) 2026 Drexel University
 
 // Author       : Sarah Johari
 // Email        : sj984@drexel.edu
-// Date         : Jul 23, 2025
+// Date         : Jul, 2025
 // File         : syn_access_cnn.sv
 //
 // ─── Description ────────────────────────────────────────────────
 //
 //   Read address sequencer and MAC controller for the CNN layer.
-//   Generates control signals for bram_store_cnn / bmem_cnn:
+//   Generates control signals for bmem_cnn:
 //   kernel sweep addresses, per-window read enables, and
 //   per-window accumulator resets.
 //
-//   One instance per input channel in cnn_layer / cnn_layer_folded.
 //   Output-channel-agnostic — the same control signals apply to
-//   all output channels (in the folded design, the phase controller
-//   captures and replays these signals across phases).
+//   all output channels.
 //
 // ─── Operation ──────────────────────────────────────────────────
 //
@@ -50,8 +48,8 @@ Copyright (c) 2026 Drexel University
 //
 // ─── Parameters ─────────────────────────────────────────────────
 //
-//   X_FANIN     Input feature map height
-//   Y_FANIN     Input feature map width
+//   X_FANIN     Input channel height
+//   Y_FANIN     Input channel width
 //   X_KERNEL    Convolution kernel height
 //   Y_KERNEL    Convolution kernel width
 //   STRIDE      Convolution stride
@@ -69,9 +67,9 @@ Copyright (c) 2026 Drexel University
 //   rst        Async reset (clears delay chain, FSM, counter)
 //   memclk     Memory clock
 //   inspk      Input spikes [FANIN-1:0] — one channel's spike vector
-//   rst_acc    Per-window accumulator reset [FANOUT_FM-1:0] — fires
+//   rst_acc    Per-window accumulator reset [FANOUT-1:0] — fires
 //              when spike pattern changes in that window's receptive field
-//   rd_en      Per-window read enable [FANOUT_FM-1:0] — gates MAC
+//   rd_en      Per-window read enable [FANOUT-1:0] — gates MAC
 //              accumulation per spatial position per kernel step
 //   rd_addr    Kernel read address [ADDR_WIDTH_MEM-1:0] — shared
 //              across all windows (0 to MEM_SIZE-1)

@@ -4,7 +4,7 @@ Copyright (c) 2026 Drexel University
 
 // Author       : Sarah Johari
 // Email        : sj984@drexel.edu
-// Date         : Jul 07, 2025 (modularized May 2026)
+// Date         : Jul, 2025 (modularized May 2026)
 // File         : cnn_layer.sv
 //
 // ─── Description ────────────────────────────────────────────────
@@ -92,20 +92,20 @@ Copyright (c) 2026 Drexel University
 
 module cnn_layer #(
 	//configuration parameters
-	parameter X_FANIN 		    = 4,	
-	parameter Y_FANIN 		    = 5,	
-	parameter X_KERNEL          = 2, 			
-	parameter Y_KERNEL          = 3, 			
-	parameter STRIDE            = 1,       
-	parameter IN_CHANNEL        = 1,
-	parameter OUT_CHANNEL       = 1,
-	parameter IN_CH_ADDR_START  = 1,
-	parameter OUT_CH_ADDR_START = 1,
-	parameter FANIN_ENC_BITS    =12,
-	parameter INTEGER_PRECISION	= 7,	
-	parameter DECIMAL_PRECISION = 8,	
-	parameter WT_INTEGER_PRECISION =2, 
-	parameter ADDR_WIDTH 	    = 32,
+	parameter X_FANIN 		       = 4,	
+	parameter Y_FANIN 		       = 5,	
+	parameter X_KERNEL             = 2, 			
+	parameter Y_KERNEL             = 3, 			
+	parameter STRIDE               = 1,       
+	parameter IN_CHANNEL           = 1,
+	parameter OUT_CHANNEL          = 1,
+	parameter IN_CH_ADDR_START     = 1,
+	parameter OUT_CH_ADDR_START    = 1,
+	parameter FANIN_ENC_BITS       = 12,
+	parameter INTEGER_PRECISION	   = 7,	
+	parameter DECIMAL_PRECISION    = 8,	
+	parameter WT_INTEGER_PRECISION = 2, 
+	parameter ADDR_WIDTH 	       = 32,
 
 
 	localparam MEM_SIZE         = X_KERNEL * Y_KERNEL,
@@ -119,24 +119,24 @@ module cnn_layer #(
 	localparam WT_PRECISION		= (1+WT_INTEGER_PRECISION+DECIMAL_PRECISION),			
 	localparam PRECISION 		= (1+INTEGER_PRECISION+DECIMAL_PRECISION)	
 )(
-	input rst,			
-	input rst_neuron,
-	input memclk,			
-	input spkclk,			
-	input [PRECISION-1:0] vth,		
-	input [PRECISION-1:0] decay_rate,	
-	input [PRECISION-1:0] grow_rate,
-	input [PRECISION-1:0] vrest,		
-	input [PRECISION-1:0] reset_mechanism,	
-	input [PRECISION-1:0] refractory_period,
-	input wr_en,			
-	input [ADDR_WIDTH-1:0] wr_addr,		
-	input [WT_PRECISION-1:0] wr_data,	
-	input bias_wr_en,                            
-	input [OUT_CH_WIDTH-1:0] bias_wr_addr, 
-	input [PRECISION-1:0] bias_wr_data,           
-	input [FANIN-1:0] inspk [IN_CHANNEL-1:0],		
-	output [FANOUT-1:0] outspk [OUT_CHANNEL-1:0]	
+	input                     rst,
+    input                     rst_neuron,
+    input                     memclk,
+    input                     spkclk,
+    input  [PRECISION-1:0]    vth,
+    input  [PRECISION-1:0]    decay_rate,
+    input  [PRECISION-1:0]    grow_rate,
+    input  [PRECISION-1:0]    vrest,
+    input  [PRECISION-1:0]    reset_mechanism,
+    input  [PRECISION-1:0]    refractory_period,
+    input                     wr_en,
+    input  [ADDR_WIDTH-1:0]   wr_addr,
+    input  [WT_PRECISION-1:0] wr_data,
+    input                     bias_wr_en,
+    input  [OUT_CH_WIDTH-1:0] bias_wr_addr,
+    input  [PRECISION-1:0]    bias_wr_data,
+    input  [FANIN-1:0]        inspk           [IN_CHANNEL-1:0],
+    output [FANOUT-1:0]       outspk          [OUT_CHANNEL-1:0]	
 );
 
 
@@ -154,18 +154,18 @@ module cnn_layer #(
 		for (cfg_i = 0; cfg_i < OUT_CHANNEL; cfg_i = cfg_i + 1) begin : cfg_local_regs
 			always @(posedge memclk or posedge rst) begin
 				if (rst) begin
-					vth_local[cfg_i]               <= '0;
-					decay_rate_local[cfg_i]        <= '0;
-					grow_rate_local[cfg_i]         <= '0;
-					vrest_local[cfg_i]             <= '0;
-					reset_mechanism_local[cfg_i]   <= '0;
+					vth_local              [cfg_i] <= '0;
+					decay_rate_local       [cfg_i] <= '0;
+					grow_rate_local        [cfg_i] <= '0;
+					vrest_local            [cfg_i] <= '0;
+					reset_mechanism_local  [cfg_i] <= '0;
 					refractory_period_local[cfg_i] <= '0;
 				end else begin
-					vth_local[cfg_i]               <= vth;
-					decay_rate_local[cfg_i]        <= decay_rate;
-					grow_rate_local[cfg_i]         <= grow_rate;
-					vrest_local[cfg_i]             <= vrest;
-					reset_mechanism_local[cfg_i]   <= reset_mechanism;
+					vth_local              [cfg_i] <= vth;
+					decay_rate_local       [cfg_i] <= decay_rate;
+					grow_rate_local        [cfg_i] <= grow_rate;
+					vrest_local            [cfg_i] <= vrest;
+					reset_mechanism_local  [cfg_i] <= reset_mechanism;
 					refractory_period_local[cfg_i] <= refractory_period;
 				end
 			end
@@ -246,14 +246,13 @@ module cnn_layer #(
 	// ─────────────────────────────────────────────────────────────
     // bmem_cnn — OUT_CHANNEL × IN_CHANNEL (BRAM + MAC)
     // ─────────────────────────────────────────────────────────────
-	//wire [FANOUT-1:0] int_spk [OUT_CHANNEL-1:0][IN_CHANNEL-1:0];
 	wire [PRECISION-1:0] int_activation [OUT_CHANNEL-1:0][IN_CHANNEL-1:0][FANOUT-1:0];
 	
 	genvar j;
 	genvar k;
 	generate 
-		for (j=0; j < OUT_CHANNEL ; j++) begin
-			for (k=0; k < IN_CHANNEL ; k++) begin
+		for (j=0; j < OUT_CHANNEL ; j++) begin : bmem_oc
+			for (k=0; k < IN_CHANNEL ; k++) begin : bmem_ic
 				bmem_cnn #(
 					.X_FANIN(X_FANIN),
 					.Y_FANIN(Y_FANIN),
@@ -312,7 +311,6 @@ module cnn_layer #(
 			) lif_inst(
 				.rst(rst | rst_neuron),					
 				.clk(spkclk),				
-				//neuron parameters from configuration registers
 				.vth(vth_local[q]),
 				.decay_rate(decay_rate_local[q]),
 				.grow_rate(grow_rate_local[q]),

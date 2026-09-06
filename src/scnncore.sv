@@ -4,7 +4,7 @@ Copyright (c) 2023-2026 Drexel University
 
 // Author       : Sarah Johari
 // Email        : sj984@drexel.edu
-// Date         : Sep 2, 2025
+// Date         : Sep, 2025
 // File         : scnncore.sv
 //
 // ─── Description ────────────────────────────────────────────────
@@ -58,12 +58,11 @@ Copyright (c) 2023-2026 Drexel University
 //
 //   rst:         Global reset — clears all weights, neuron state,
 //                and config registers. Per-layer replicated copies
-//                (rst_layer0, rst_layer1, rst_fc0, rst_fc1) with
-//                max_fanout=50000 constraint to ease timing.
+//                (rst_layer0, rst_layer1, rst_fc0, rst_fc1) 
 //
 //   rst_neuron:  Per-image reset — clears LIF state only (vmem,
 //                refr_cnt, outspk). Weights and biases preserved.
-//                Also replicated per layer with max_fanout constraint.
+//                Also replicated per layer.
 //
 // ─── CNN Layer Configuration ────────────────────────────────────
 //
@@ -87,7 +86,7 @@ Copyright (c) 2023-2026 Drexel University
 //
 // ─── Parameters ─────────────────────────────────────────────────
 //
-//   System-wide parameters from parameters.vh (precision, address
+//   System-wide parameters from parameters.svh (precision, address
 //   encoding, clock timing, network dimensions).
 //   Per-layer CNN config from cnn_config.svh.
 //
@@ -117,21 +116,17 @@ module scnncore #(
 	localparam FANOUT_L0 = cnn_config[0][5]*cnn_config[0][6],
 	localparam OUT_CHANNEL = cnn_config[HIDDEN_LAYERS-2][4]
 	)(
-	//IOs for loading layer-by-layer synaptic weights into the memory and programming the configuration registers.
-	//mem_write = 0, reg_write = 1 ==> write to configuration registers
-	//mem_write = 1, reg_write = 0 ==> write to synaptic memory
-	input mem_write,			        	//write enable for synaptic memory
-	input cfg_write,				        //write enable for configuration registers
-	input [ADDR_WIDTH-1:0] wr_addr,			//memory/configuration address
-	input [DATA_WIDTH-1:0] wr_data,			//memory/configuration data 
-	input bias_write,				        // write enable for bias registers
-	//IOs for data processing
-	input rst,					//reset signal 
-	input rst_neuron,
-	input memclk,					//memory clock
-	input spkclk,					//spike clock
-	input [FANIN-1:0] spk_in [IN_CHANNEL-1:0],		//spike input to the input layer
-	output [FANOUT-1:0] spk_out
+	input                   mem_write,			        
+	input                   cfg_write,				     
+	input  [ADDR_WIDTH-1:0] wr_addr,			
+	input  [DATA_WIDTH-1:0] wr_data,		
+	input                   bias_write,		
+	input                   rst,					
+	input                   rst_neuron,
+	input                   memclk,				
+	input                   spkclk,					
+	input  [FANIN-1:0]      spk_in [IN_CHANNEL-1:0],		
+	output [FANOUT-1:0]     spk_out
 	);
 
 
@@ -190,8 +185,6 @@ module scnncore #(
 	);
 
 	// Layer select decoder for bias writes ────────────────
-	// Uses same layer address field as weight writes.
-	// Only CNN layers (0, 1, 2) get bias; FC layer does not.
 	wire [HARDWARE_LAYERS-1:0] bias_addr_en;
 	parameterized_decoder #(
 		.N(HARDWARE_LAYERS)
@@ -208,8 +201,6 @@ module scnncore #(
 	wire [PRECISION-1:0] vrest;
 	wire [PRECISION-1:0] reset_mechanism;
 	wire [PRECISION-1:0] refractory_period;
-	// wire [DATA_WIDTH-1:0] layer_to_monitor;
-	// wire [DATA_WIDTH-1:0] neuron_to_monitor;
 	decoder_neuron_config #(
 		.ADDR_WIDTH(ADDR_WIDTH),
 		.DATA_WIDTH(DATA_WIDTH),

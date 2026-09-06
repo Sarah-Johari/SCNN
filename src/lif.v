@@ -105,25 +105,23 @@ Modifications Copyright (c) 2026 Drexel University
 
 module lif #(
 	//configurable parameters
-	parameter INTEGER_PRECISION = 3,	//integer precision
-	parameter DECIMAL_PRECISION = 4,	//decimal precision
+	parameter INTEGER_PRECISION = 3,	
+	parameter DECIMAL_PRECISION = 4,	
 	//local parameters
-	localparam PRECISION = (1+INTEGER_PRECISION+DECIMAL_PRECISION)	//bit precision
+	localparam PRECISION = (1+INTEGER_PRECISION+DECIMAL_PRECISION)	
 	)(
 	//IOs for data processing
-	input rst,				//reset
-	input clk,				//clock
-	//neuron parameters from configuration registers
-	input [PRECISION-1:0] vth,		//neuron threshold voltage
-	input [PRECISION-1:0] decay_rate,	//membrane decay rate
-	input [PRECISION-1:0] grow_rate,	//membrane grow rate
-	input [PRECISION-1:0] vrest,		//neuron resting potential
-	input [PRECISION-1:0] reset_mechanism,	//neuron reset mechanism
-	input [PRECISION-1:0] refractory_period,//neuron refractory period
-	input [PRECISION-1:0] activation,	//activation
-	output reg outspk,			//output spike
-	//IOs for monitoring
-	output [PRECISION-1:0] vmem		//output membrane voltage
+	input rst,				
+	input clk,	
+	input [PRECISION-1:0] vth,		
+	input [PRECISION-1:0] decay_rate,	
+	input [PRECISION-1:0] grow_rate,	
+	input [PRECISION-1:0] vrest,	
+	input [PRECISION-1:0] reset_mechanism,	
+	input [PRECISION-1:0] refractory_period,
+	input [PRECISION-1:0] activation,	
+	output reg outspk,			
+	output [PRECISION-1:0] vmem		
 );
 
 	reg [PRECISION-1:0] refr_cnt;		//refractory Counter

@@ -89,12 +89,6 @@ Modifications Copyright (c) 2026 Drexel University
 //   rd_en        Read enable — high when addr_cnt points to an active spike
 //   rd_addr      Read address [ADDR_WIDTH-1:0] — countdown from FANIN-1 to 0
 //
-// ─── Note ───────────────────────────────────────────────────────
-//
-//   changed and new_nonzero wires (lines 48-49) are declared but
-//   currently unused. They can be removed or used for future
-//   enhancements to the trigger logic.
-//
 // -----------------------------------------------------------------------------*/
 
 `timescale 1ns / 1ps
@@ -116,8 +110,6 @@ module syn_access_fc #(
 	reg [FANIN-1:0] inspk_q1, inspk_q2, inspk_q3;	//delayed version of the spikes
 	reg cnt_en;				//enable counting of memory read accesses
 	reg [ADDR_WIDTH-1:0] addr_cnt;		//address counter
-	wire changed;
-	wire new_nonzero;
 
 	//delay spikes by two clock cycles and check if the input has changed.
 	always @(posedge memclk or posedge rst) begin

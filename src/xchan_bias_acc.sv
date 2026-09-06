@@ -10,33 +10,33 @@ Copyright (c) 2026 Drexel University
 // ─── Description ────────────────────────────────────────────────
 //
 //   Cross-channel activation accumulator and bias adder.
-//   Sums activations across all IN_CHANNEL input channels for P
-//   parallel units, then adds a per-unit bias value.
+//   Sums activations across all IN_CHANNEL input channels for each
+//   output channel, then adds a per-channel bias value.
 //
 //   Purely combinational — no clock, no state. Instantiated once
-//   inside both cnn_layer (with P=OUT_CHANNEL) and cnn_layer_folded
-//   (with P=folding factor).
+//   inside cnn_layer (all output channels computed in parallel).
 //
 // ─── Operation ──────────────────────────────────────────────────
 //
-//   For each parallel unit u (0..P-1) and spatial position h (0..FANOUT-1):
+//   For each output channel u (0..OUT_CHANNEL-1) and spatial
+//   position h (0..FANOUT-1):
 //
 //     1. Cross-channel sum:
-//        acc[u][0][h] = mac_activation[u][0][h]           (first channel)
-//        acc[u][f][h] = acc[u][f-1][h] + mac_activation[u][f][h]  (chain)
-//        xc_sum[u][h] = acc[u][IN_CHANNEL-1][h]           (final sum)
+//        acc[u][0][h] = mac_activation[u][0][h]
+//        acc[u][f][h] = acc[u][f-1][h] + mac_activation[u][f][h]
+//        xc_sum[u][h] = acc[u][IN_CHANNEL-1][h]
 //
 //     2. Bias addition:
 //        xchan_biased[u][h] = xc_sum[u][h] + active_bias[u]
 //
-//   Implemented as a chain of qadd instances per (unit, position) pair.
-//   IN_CHANNEL-1 adders for cross-channel sum + 1 adder for bias
-//   = IN_CHANNEL adders per (unit, position).
-//   Total: P × FANOUT × IN_CHANNEL qadd instances.
+//   Resource count:
+//     qadd (cross-channel): OUT_CHANNEL × FANOUT × (IN_CHANNEL-1)
+//     qadd (bias):          OUT_CHANNEL × FANOUT
+//     Total:                OUT_CHANNEL × FANOUT × IN_CHANNEL
 //
 // ─── Parameters ─────────────────────────────────────────────────
 //
-//   P                   Number of parallel units
+//   P                   Set to OUT_CHANNEL (one unit per output channel)
 //   IN_CHANNEL          Number of input channels to sum across
 //   FANOUT              Number of output spatial positions
 //   INTEGER_PRECISION   Integer bits in fixed-point representation
@@ -44,12 +44,11 @@ Copyright (c) 2026 Drexel University
 //
 // ─── Ports ──────────────────────────────────────────────────────
 //
-//   mac_activation   Input [P][IN_CHANNEL][FANOUT] of [PRECISION] —
-//                    per-channel activations from MAC units
-//   active_bias      Input [P] of [PRECISION] —
-//                    gated bias per parallel unit (selected by phase
-//                    in folded design, all channels in unfolded)
-//   xchan_biased     Output [P][FANOUT] of [PRECISION] —
+//   mac_activation   Input [OUT_CHANNEL][IN_CHANNEL][FANOUT] of [PRECISION]
+//                    per-channel activations from bmem_cnn instances
+//   active_bias      Input [OUT_CHANNEL] of [PRECISION]
+//                    gated bias from bias_store_gated
+//   xchan_biased     Output [OUT_CHANNEL][FANOUT] of [PRECISION]
 //                    final activation after cross-channel sum + bias
 //
 // -----------------------------------------------------------------------------*/
@@ -77,7 +76,7 @@ module xchan_bias_acc #(
     genvar u, h, f;
     generate
         for (u = 0; u < OUT_CHANNEL; u = u + 1) begin : xchan_par
-            for (h = 0; h < FANOUT; h = h + 1) begin : xchan_fm
+            for (h = 0; h < FANOUT; h = h + 1) begin : xchan_fn
 
                 // First input channel: direct pass-through
                 assign acc[u][0][h] = mac_activation[u][0][h];
