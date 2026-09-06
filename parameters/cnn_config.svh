@@ -4,7 +4,7 @@ Copyright (c) 2026 Drexel University
 
 // Author       : Sarah Johari
 // Email        : sj984@drexel.edu
-// Date         : Sep 9, 2025
+// Date         : Sep, 2025
 // File         : cnn_config.svh
 //
 // ─── Description ────────────────────────────────────────────────
@@ -27,8 +27,8 @@ Copyright (c) 2026 Drexel University
 //     [2] STRIDE        Convolution stride
 //     [3] IN_CHANNEL    Number of input channels
 //     [4] OUT_CHANNEL   Number of output channels
-//     [5] X_FANOUT      Output feature map height
-//     [6] Y_FANOUT      Output feature map width
+//     [5] X_FANOUT      Output channel height
+//     [6] Y_FANOUT      Output channel. width
 //
 // ─── Usage ──────────────────────────────────────────────────────
 //
