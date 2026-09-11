@@ -1,4 +1,0 @@
-Running: xsim.dir/tb_scnncore_behav/xsimk.exe -simmode gui -wdb tb_scnncore_behav.wdb -simrunnum 0 -socket 50353
-Design successfully loaded
-Design Loading Memory Usage: 129864 KB (Peak: 129864 KB)
-Design Loading CPU Usage: 186 ms
