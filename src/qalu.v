@@ -46,10 +46,9 @@ module qalu #(
 	)(
 	input  [N-1:0]	a,	//input 1
 	input  [N-1:0]	b,	//input 2
-	input 		en,	//enable for the alu
-	input		sel,	//select between quantized adder vs. subtractor
+	input 		    en,	//enable for the alu
 	output [N-1:0] 	q,	//output quantized to same number of bits as the input
-	output 		pos	//output bit indicating if the result is positive
+	output 		    pos	//output bit indicating if the result is positive
 	);
 	
 	wire [N-1:0] sum;	//temporary result

@@ -1,4 +1,4 @@
-/* -----------------------------------------------------------------------------
+ /* -----------------------------------------------------------------------------
 SPDX-License-Identifier: MIT
 Copyright (c) 2026 Drexel University
 
@@ -88,7 +88,7 @@ Copyright (c) 2026 Drexel University
 `ifndef PARAMETERS_SVH      
 `define PARAMETERS_SVH      
 
-parameter string INSTALL_DIR  = "C:/vivado_sim/SpiCA";        //base installation directory
+parameter string INSTALL_DIR  = "C:/vivado_sim/SCNN";        //base installation directory
 
 parameter VTH               = 16;	
 parameter DECAY_RATE        = 3;	

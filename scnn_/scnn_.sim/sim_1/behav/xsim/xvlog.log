@@ -1,0 +1,42 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/vivado_sim/SCNN/src/lif.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lif
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/vivado_sim/SCNN/src/qadd.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module qadd
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/vivado_sim/SCNN/src/qalu.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module qalu
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/vivado_sim/SCNN/src/qmul.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module qmult
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/vivado_sim/SCNN/src/twos_complement.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module twos_complement
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/bias_store_gated.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bias_store_gated
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/bmem_cnn.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bmem_cnn
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/bmem_fc.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bmem_fc
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/bram_decoder.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bram_decoder
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/cnn_layer.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cnn_layer
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/cuba_lif.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cuba_lif
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/decoder_neuron_config.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module decoder_neuron_config
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/fc_layer.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fc_layer
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/multibit_sampler .sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module multibit_sampler
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/parameterized_decoder.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module parameterized_decoder
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/scnncore.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module scnncore
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/syn_access_cnn.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module syn_access_cnn
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/syn_access_fc.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module syn_access_fc
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/vector_sampler.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module vector_sampler
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/src/xchan_bias_acc.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module xchan_bias_acc
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/vivado_sim/SCNN/tb/tb_scnncore.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_scnncore

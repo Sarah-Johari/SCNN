@@ -217,9 +217,8 @@ module cnn_layer #(
 	// ─────────────────────────────────────────────────────────────
     // syn_access_cnn — IN_CHANNEL instances
     // ─────────────────────────────────────────────────────────────
-	reg [FANOUT-1:0] rd_en   [IN_CHANNEL-1:0];
-	reg [FANOUT-1:0] rst_acc [IN_CHANNEL-1:0]; 
-	// reg [FANOUT-1:0] spk_int [IN_CHANNEL-1:0];
+	reg [FANOUT-1:0]         rd_en   [IN_CHANNEL-1:0];
+	reg [FANOUT-1:0]         rst_acc [IN_CHANNEL-1:0]; 
 	reg [ADDR_WIDTH_MEM-1:0] rd_addr [IN_CHANNEL-1:0];
 
 	genvar i;
@@ -235,7 +234,6 @@ module cnn_layer #(
 				.rst(rst),
 				.memclk(memclk),
 				.inspk(inspk[i]),
-				// .outspk(spk_int[i]),
 				.rst_acc(rst_acc[i]),
 				.rd_en(rd_en[i]),
 				.rd_addr(rd_addr[i])

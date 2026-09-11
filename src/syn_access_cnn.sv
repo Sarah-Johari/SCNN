@@ -58,7 +58,7 @@ Copyright (c) 2026 Drexel University
 //     FANIN          = X_FANIN × Y_FANIN (input spatial positions)
 //     X_FANOUT       = ((X_FANIN - X_KERNEL) / STRIDE) + 1
 //     Y_FANOUT       = ((Y_FANIN - Y_KERNEL) / STRIDE) + 1
-//     FANOUT_FM      = X_FANOUT × Y_FANOUT (output spatial positions)
+//     FANOUT         = X_FANOUT × Y_FANOUT (output spatial positions)
 //     MEM_SIZE       = X_KERNEL × Y_KERNEL (kernel positions to sweep)
 //     ADDR_WIDTH_MEM = clog2(MEM_SIZE)
 //
@@ -96,16 +96,15 @@ module syn_access_cnn #(
     localparam FANIN          = X_FANIN * Y_FANIN,
     localparam X_FANOUT       = ((X_FANIN - X_KERNEL) / STRIDE) + 1,
     localparam Y_FANOUT       = ((Y_FANIN - Y_KERNEL) / STRIDE) + 1,
-    localparam FANOUT_FM      = X_FANOUT * Y_FANOUT,
+    localparam FANOUT         = X_FANOUT * Y_FANOUT,
     localparam MEM_SIZE       = X_KERNEL * Y_KERNEL,
     localparam ADDR_WIDTH_MEM = $clog2(MEM_SIZE)
 )(
     input                           rst,
     input                           memclk,
     input      [FANIN-1:0]          inspk,
-    // output reg [FANOUT_FM-1:0]      outspk,
-    output reg [FANOUT_FM-1:0]      rst_acc,
-    output reg [FANOUT_FM-1:0]      rd_en,
+    output reg [FANOUT-1:0]      rst_acc,
+    output reg [FANOUT-1:0]      rd_en,
     output     [ADDR_WIDTH_MEM-1:0] rd_addr
 );
 
@@ -131,7 +130,7 @@ module syn_access_cnn #(
     reg [ADDR_WIDTH_MEM-1:0] k;  // shared kernel counter 0→MEM_SIZE-1
 
     // ── combinational signals ─────────────────────────────
-    reg [FANOUT_FM-1:0] rd_en_comb;
+    reg [FANOUT-1:0] rd_en_comb;
 
     // ── FSM + counter ─────────────────────────────────────
     always @(posedge memclk or posedge rst) begin
@@ -160,6 +159,8 @@ module syn_access_cnn #(
                     k     <= 0;
                     state <= IDLE;
                 end
+                
+                default: state <= IDLE;
             endcase
         end
     end
@@ -173,6 +174,8 @@ module syn_access_cnn #(
 
     always_comb begin
         rd_en_comb = '0;
+        curr_win   = '0;
+        input_idx  = '0;
         if (state == STREAMING) begin
             for (win_x = 0; win_x < X_FANOUT; win_x++) begin
                 for (win_y = 0; win_y < Y_FANOUT; win_y++) begin

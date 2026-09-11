@@ -230,7 +230,6 @@ module lif #(
 		.a(int_vmem),
 		.b(vth_n),
 		.en(1'b1),
-		.sel(1'b0),
 		.q(vmem_sub),
 		.pos(vmem_greater_vth)
 	);

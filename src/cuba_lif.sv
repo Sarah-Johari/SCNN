@@ -52,8 +52,8 @@ Modifications Copyright (c) 2026 Drexel University
 //      Allows re-running inference without re-loading weights.
 //
 //   3. Removed inspk port and int_spk wire.
-//      Original: inspk fed to bmem, bmem produced int_spk (CDC-crossed
-//      spike presence), int_spk fed to LIF's inspk input.
+//      Original: inspk fed to bmem, bmem produced int_spk , int_spk fed 
+//      to LIF's inspk input.
 //      Modified: neither bmem nor LIF use inspk. Activation is the sole
 //      driver of neuron dynamics (activation-only mode).
 //
@@ -68,7 +68,7 @@ Modifications Copyright (c) 2026 Drexel University
 //   Data flow:
 //     wr interface → bmem (weight storage + serial MAC on memclk)
 //                      ↓
-//                  activation (CDC to spkclk inside bmem)
+//                  activation (sampled to spkclk inside bmem)
 //                      ↓
 //                    lif (membrane dynamics on spkclk)
 //                      ↓

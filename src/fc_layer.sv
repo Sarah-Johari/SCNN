@@ -113,21 +113,18 @@ Modifications Copyright (c) 2026 Drexel University
 
 module fc_layer #(
 	//configuration parameters
-	parameter FANIN 		    = 32,	//fanin of each neuron of the layer
-	parameter FANOUT 		    = 10,	//number of neurons in the layer
-	parameter INTEGER_PRECISION	= 3,	//integer precision
-	parameter DECIMAL_PRECISION = 4,	//decimal precision
-	parameter WT_INTEGER_PRECISION =2, 
-	// parameter ADDR_WIDTH_NEURON = 10,	//addr width for neuron
-	// parameter ADDR_WIDTH_FANIN 	= 10,	//addr width for fanin	
-	parameter ADDR_WIDTH        = 24,
-	parameter NEU_ADDR_START = 12,
+	parameter FANIN 		       = 32,	//fanin of each neuron of the layer
+	parameter FANOUT 		       = 10,	//number of neurons in the layer
+	parameter INTEGER_PRECISION	   = 3,	//integer precision
+	parameter DECIMAL_PRECISION    = 4,	//decimal precision
+	parameter WT_INTEGER_PRECISION = 2, 	
+	parameter ADDR_WIDTH           = 24,
+	parameter NEU_ADDR_START       = 12,
 	//local parameters
-	//localparam ADDR_WIDTH 		= (ADDR_WIDTH_NEURON+ADDR_WIDTH_FANIN),		//address width
-	localparam FANIN_WIDTH		= $clog2(FANIN),				//log2 of FANIN
-	localparam FANOUT_WIDTH		= $clog2(FANOUT),				//log2 of FANOUT
-	localparam WT_PRECISION		= (1+WT_INTEGER_PRECISION+DECIMAL_PRECISION),			//bit precision for synaptic weights
-	localparam PRECISION 		= (1+INTEGER_PRECISION+DECIMAL_PRECISION)	//bit precision for state variables
+	localparam FANIN_WIDTH		  = $clog2(FANIN),				//log2 of FANIN
+	localparam FANOUT_WIDTH		  = $clog2(FANOUT),				//log2 of FANOUT
+	localparam WT_PRECISION		  = (1+WT_INTEGER_PRECISION+DECIMAL_PRECISION),			//bit precision for synaptic weights
+	localparam PRECISION 		  = (1+INTEGER_PRECISION+DECIMAL_PRECISION)	//bit precision for state variables
 )(
 	input rst,				//reset
 	input rst_neuron,    
@@ -145,6 +142,7 @@ module fc_layer #(
 	input [WT_PRECISION-1:0] wr_data,	//write data (weights) to synaptic memory of precision = WT_PRECISION.
 	input [FANIN-1:0] inspk,		//spike input from pre-synaptic connections
 	output [FANOUT-1:0] outspk		//spike output from lifs
+	// output [PRECISION-1:0] vmem [FANOUT-1:0]		//membrane potential of a lif
 );
 
 
@@ -190,7 +188,7 @@ module fc_layer #(
 
 
 	//instantiate the read address decoder
-	wire spk_int,rst_acc,rd_en;
+	wire rst_acc,rd_en;
 	wire [FANIN_WIDTH-1:0] rd_addr;
 	syn_access_fc #(
 		.FANIN(FANIN)

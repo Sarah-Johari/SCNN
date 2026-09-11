@@ -40,16 +40,17 @@ module vector_sampler #(
 	output [N-1:0] 	out	//output
 	);
 
-	reg [N-1:0] in_q1, in_q2;
+	reg [N-1:0] in_q1;
+	// reg [N-1:0] in_q2;
 
 	always @(posedge clk or posedge rst) begin
 		if (rst) begin
 			in_q1 	<= 0;
-			in_q2	<= 0;
+			// in_q2	<= 0;
 		end
 		else begin
 			in_q1	<= in;
-			in_q2	<= in_q1;
+			// in_q2	<= in_q1;
 		end
 	end
 
